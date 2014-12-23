@@ -1,12 +1,18 @@
 language: python
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.pip-cache/
+
 python:
   - '2.6'
   - '2.7'
   - 'pypy'
 
 install:
-  - pip install tox>=1.8
+  - pip install --download-cache $HOME/.pip-cache tox>=1.8
 
 env:
   - ADAPTER=sqlite
@@ -19,6 +25,7 @@ env:
 
 before_script:
   - if [[ $ADAPTER == mysql ]]; then mysql -e 'create database pydal;'; fi
+  - if [[ $ADAPTER == postgres* ]]; then pip install --download-cache $HOME/.pip-cache psycopg2; fi;
   - if [[ $ADAPTER == postgres* ]]; then psql -c 'create database pydal;' -U postgres; fi
   - if [[ $ADAPTER == postgres* ]]; then psql -c 'create extension postgis;' -U postgres -d pydal; fi
 
