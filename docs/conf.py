@@ -23,11 +23,9 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
-from ConfigParser import SafeConfigParser
-config_values = SafeConfigParser()
-config_values.read(os.path.join('..', 'setup.cfg'))
-_version = config_values.get('metadata', 'version')
-_release = _version
+import pkg_resources
+version_ = pkg_resources.get_distribution('pyDAL').version
+release_ = version_
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -184,7 +182,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'web2py.tex', u'pyDAL Documentation',
+  ('index', 'pydal.tex', u'pyDAL Documentation',
    u'web2py-developers', 'manual'),
 ]
 
